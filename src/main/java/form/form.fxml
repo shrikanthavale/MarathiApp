@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="491.0" prefWidth="626.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="form.FormController">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="249.0" prefWidth="624.0">
+            <children>
+                <GridPane layoutX="26.0" layoutY="15.0" prefHeight="188.0" prefWidth="367.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="70.0" minHeight="10.0" prefHeight="67.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label prefHeight="33.0" prefWidth="127.0" text="%name">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                        <TextField fx:id="editUsername" GridPane.columnIndex="1" />
+                        <Label prefHeight="33.0" prefWidth="127.0" text="%address" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                        <Label prefHeight="33.0" prefWidth="127.0" text="%withdrawamount" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                        <TextArea fx:id="editUserAddress" prefHeight="200.0" prefWidth="192.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="editAmount" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                    </children>
+                </GridPane>
+                <FlowPane layoutX="411.0" layoutY="21.0" prefHeight="200.0" prefWidth="200.0">
+                    <children>
+                        <ButtonBar prefHeight="62.0" prefWidth="195.0">
+                            <buttons>
+                                <Button mnemonicParsing="false" onAction="#saveServiceRequest" prefHeight="32.0" prefWidth="188.0" text="%save" />
+                            </buttons>
+                        </ButtonBar>
+                        <ButtonBar prefHeight="40.0" prefWidth="192.0">
+                            <buttons>
+                                <Button mnemonicParsing="false" onAction="#clearData" prefHeight="30.0" prefWidth="183.0" text="%clear" />
+                            </buttons>
+                        </ButtonBar>
+                    </children>
+                </FlowPane>
+            </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+            <children>
+                <SplitPane dividerPositions="0.1414141414141414" layoutX="18.0" layoutY="14.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="589.0">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <ButtonBar layoutX="387.0" layoutY="-7.0" prefHeight="40.0" prefWidth="200.0">
+                                    <buttons>
+                                        <Button mnemonicParsing="false" onAction="#reload" prefHeight="25.0" prefWidth="123.0" text="%refresh" />
+                                    </buttons>
+                                </ButtonBar>
+                            </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                            <children>
+                                <TableView id="requestTable" fx:id="requestTable" layoutX="14.0" layoutY="4.0" prefHeight="160.0" prefWidth="676.0">
+                                    <columns>
+                                        <TableColumn fx:id="id" prefWidth="37.0" text="Id" />
+                                        <TableColumn fx:id="requestName" prefWidth="119.0" text="%name" />
+                                        <TableColumn fx:id="requestAddress" prefWidth="138.0" text="%address" />
+                                        <TableColumn fx:id="requestAmount" prefWidth="146.0" text="%withdrawamount" />
+                                        <TableColumn fx:id="requestStatus" prefWidth="133.0" text="%status" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </items>
+                </SplitPane>
+            </children>
+        </AnchorPane>
+    </items>
+</SplitPane>
