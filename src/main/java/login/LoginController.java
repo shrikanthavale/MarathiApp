@@ -41,7 +41,7 @@ public class LoginController {
         Stage stage = new Stage();
         stage.setTitle(windowTitle);
         stage.setScene(new Scene(formView.getView()));
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.centerOnScreen();
         loginView.getStage().close();
         stage.show();

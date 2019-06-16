@@ -9,13 +9,13 @@ public class ServiceRequest {
     private long id;
     private String name;
     private String address;
-    private long amount;
+    private double amount;
     private String status;
 
     public ServiceRequest() {
     }
 
-    public ServiceRequest(String name, String address, long amount, String status) {
+    public ServiceRequest(String name, String address, double amount, String status) {
         this.name = name;
         this.address = address;
         this.amount = amount;
@@ -40,11 +40,11 @@ public class ServiceRequest {
         this.name = name;
     }
 
-    public long getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(long amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

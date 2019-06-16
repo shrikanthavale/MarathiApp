@@ -1,5 +1,6 @@
 package form;
 
+import database.dto.ServiceRequestDto;
 import database.entity.ServiceRequest;
 import database.service.ServiceRequestService;
 import javafx.fxml.FXML;
@@ -10,14 +11,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import util.MarathiNumberFormatter;
+
+import java.math.BigDecimal;
+import java.text.ParseException;
 
 @Component
 public class FormController {
 
     private final ServiceRequestService serviceRequestService;
     @FXML
-    private TableView<ServiceRequest> requestTable;
-
+    private TableView<ServiceRequestDto> requestTable;
     @FXML
     private TableColumn<ServiceRequest, String> requestName;
     @FXML
@@ -29,11 +33,14 @@ public class FormController {
     @FXML
     private TableColumn<ServiceRequest, String> id;
     @FXML
+    private TableColumn<ServiceRequest, String> calculatedInterestRate;
+    @FXML
     private TextField editUsername;
     @FXML
     private TextArea editUserAddress;
     @FXML
     private TextField editAmount;
+    private final MarathiNumberFormatter marathiNumberFormatter;
 
     /**
      * Service Request controller initialization.
@@ -43,6 +50,7 @@ public class FormController {
     @Autowired
     public FormController(ServiceRequestService serviceRequestService) {
         this.serviceRequestService = serviceRequestService;
+        marathiNumberFormatter = new MarathiNumberFormatter();
     }
 
     @FXML
@@ -52,16 +60,27 @@ public class FormController {
         requestAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         requestStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        calculatedInterestRate.setCellValueFactory(new PropertyValueFactory<>("calculatedAmount"));
         requestTable.getItems().addAll(serviceRequestService.getServiceRequests());
+        setRandomMarathiNumber();
     }
 
     @FXML
-    public void saveServiceRequest() {
+    public void saveServiceRequest() throws ParseException {
         final String username = editUsername.getText();
         final String address = editUserAddress.getText();
         final String amount = editAmount.getText();
-        serviceRequestService.save(new ServiceRequest(username, address, Long.parseLong(amount), null));
+        serviceRequestService.save(
+                new ServiceRequest(
+                        username,
+                        address,
+                        marathiNumberFormatter.extractEnglishNumber(amount),
+                        null
+                )
+        );
         reload();
+        clearData();
+        setRandomMarathiNumber();
     }
 
     @FXML
@@ -75,5 +94,12 @@ public class FormController {
     public void reload() {
         requestTable.getItems().clear();
         requestTable.getItems().addAll(serviceRequestService.getServiceRequests());
+    }
+
+    private void setRandomMarathiNumber() {
+        double randomNumber = ((Math.random() * 90000) + 10) / 10.0;
+        editAmount.setText(
+                marathiNumberFormatter.format(BigDecimal.valueOf(randomNumber), false)
+        );
     }
 }

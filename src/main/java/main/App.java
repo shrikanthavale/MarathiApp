@@ -1,5 +1,7 @@
 package main;
 
+import database.entity.ServiceRequest;
+import database.service.ServiceRequestService;
 import form.FormView;
 import javafx.application.Preloader;
 import javafx.scene.Scene;
@@ -9,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
@@ -27,6 +31,9 @@ public class App extends AbstractJavaFxApplicationSupport {
 	@Autowired
 	private LoginView loginView;
 
+	@Autowired
+	private ServiceRequestService serviceRequestService;
+
 	@Override
 	public void start(Stage stage) {
 
@@ -42,6 +49,25 @@ public class App extends AbstractJavaFxApplicationSupport {
 
 	public static void main(String[] args) {
 		launchApp(App.class, args);
+	}
+
+
+	@EventListener
+	public void loadDefaultData(ApplicationReadyEvent event) {
+		ServiceRequest serviceRequest1 = new ServiceRequest(
+				"श्रीकांत हावळे",
+				"खडकी, पुणे",
+				1234.56,
+				"प्रलंबित"
+		);
+		serviceRequestService.save(serviceRequest1);
+		ServiceRequest serviceRequest2 = new ServiceRequest(
+				"प्रकाश शिंदे",
+				"ठाणे",
+				2000,
+				"प्रलंबित"
+		);
+		serviceRequestService.save(serviceRequest2);
 	}
 
 }
