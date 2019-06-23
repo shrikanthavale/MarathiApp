@@ -1,5 +1,6 @@
 package login;
 
+import commons.ViewController;
 import form.FormView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class LoginController {
+public class LoginController extends ViewController {
     @Autowired
     private FormView formView;
 
@@ -38,13 +39,10 @@ public class LoginController {
             return;
         }
 
-        Stage stage = new Stage();
-        stage.setTitle(windowTitle);
+        final Stage stage = getPrimaryStage();
         stage.setScene(new Scene(formView.getView()));
-        stage.setResizable(false);
         stage.centerOnScreen();
-        loginView.getStage().close();
         stage.show();
-        formView.setStage(stage);
     }
+
 }

@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 import util.MarathiNumberFormatter;
 
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.math.RoundingMode;
 
+/**
+ * Converter responsible for converting service request to dto.
+ */
 @Component
 public class ServiceRequestConverter implements Converter<ServiceRequest, ServiceRequestDto> {
 

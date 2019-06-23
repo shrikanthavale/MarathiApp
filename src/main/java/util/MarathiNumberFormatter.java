@@ -8,15 +8,28 @@ import java.text.ParseException;
 import java.util.Locale;
 
 public class MarathiNumberFormatter {
-    private final String MARATHI_SPELLOUT_RULES;
-    private final RuleBasedNumberFormat marathiTextFormatter;
-    private final NumberFormat marathiNumberFormatter;
+    private final String marathiSpellOutRules;
+    private final RuleBasedNumberFormat textFormatter;
+    private final NumberFormat numberFormatter;
 
     public MarathiNumberFormatter() {
-        MARATHI_SPELLOUT_RULES = loadSpelloutRules();
-        marathiTextFormatter = new RuleBasedNumberFormat(MARATHI_SPELLOUT_RULES);
-        marathiNumberFormatter = NumberFormat.getInstance(new Locale("hi", "IN"));
-        marathiNumberFormatter.setGroupingUsed(false);
+        marathiSpellOutRules = loadSpelloutRules();
+        textFormatter = new RuleBasedNumberFormat(marathiSpellOutRules);
+        numberFormatter = NumberFormat.getInstance(new Locale("hi", "IN"));
+        numberFormatter.setGroupingUsed(false);
+    }
+
+    public String format(BigDecimal number, boolean isSpellOutTextNeeded) {
+
+        if (!isSpellOutTextNeeded) {
+            return formatInMarathi(number);
+        }
+
+        return formatInMarathi(number) + ", " + spellOutInMarathi(number);
+    }
+
+    public double extractEnglishNumber(final String marathiNumber) throws ParseException {
+        return numberFormatter.parse(marathiNumber).doubleValue();
     }
 
     private static String loadSpelloutRules() {
@@ -100,7 +113,7 @@ public class MarathiNumberFormatter {
                 .append("71: एक्काहत्तर;").append("\n")
                 .append("72: बाहत्तर;").append("\n")
                 .append("73: त्र्याहत्तर;").append("\n")
-                .append("74 :    चौर्‍याहत्तर;").append("\n")
+                .append("74: चौर्‍याहत्तर;").append("\n")
                 .append("75: पंच्याहत्तर;").append("\n")
                 .append("76: शहात्तर;").append("\n")
                 .append("77: सत्याहत्तर;").append("\n")
@@ -137,23 +150,10 @@ public class MarathiNumberFormatter {
     }
 
     private String spellOutInMarathi(BigDecimal number) {
-        return marathiTextFormatter.format(number);
+        return textFormatter.format(number);
     }
 
     private String formatInMarathi(BigDecimal number) {
-        return marathiNumberFormatter.format(number);
-    }
-
-    public String format(BigDecimal number, boolean isSpellOutTextNeeded) {
-
-        if (!isSpellOutTextNeeded) {
-            return formatInMarathi(number);
-        }
-
-        return formatInMarathi(number) + ", " + spellOutInMarathi(number);
-    }
-
-    public double extractEnglishNumber(final String marathiNumber) throws ParseException {
-        return marathiNumberFormatter.parse(marathiNumber).doubleValue();
+        return numberFormatter.format(number);
     }
 }

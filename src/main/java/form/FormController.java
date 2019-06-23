@@ -1,5 +1,6 @@
 package form;
 
+import commons.ViewController;
 import database.dto.ServiceRequestDto;
 import database.entity.ServiceRequest;
 import database.service.ServiceRequestService;
@@ -17,7 +18,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 
 @Component
-public class FormController {
+public class FormController extends ViewController {
 
     private final ServiceRequestService serviceRequestService;
     @FXML
@@ -61,7 +62,7 @@ public class FormController {
         requestStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         calculatedInterestRate.setCellValueFactory(new PropertyValueFactory<>("calculatedAmount"));
-        requestTable.getItems().addAll(serviceRequestService.getServiceRequests());
+        reload();
         setRandomMarathiNumber();
     }
 

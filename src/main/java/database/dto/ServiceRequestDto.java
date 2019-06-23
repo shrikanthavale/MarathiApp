@@ -1,5 +1,8 @@
 package database.dto;
 
+/**
+ * Service request dto.
+ */
 public class ServiceRequestDto {
     private long id;
     private String name;
